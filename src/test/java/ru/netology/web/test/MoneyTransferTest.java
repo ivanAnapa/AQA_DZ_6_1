@@ -79,7 +79,7 @@ class MoneyTransferTest {
         int firstCardBalanceBefore = dashboardPage.getCardBalance(1);
         int secondCardBalanceBefore = dashboardPage.getCardBalance(2);
         Assertions.assertEquals(firstCardBalanceAfter, firstCardBalanceBefore);
-        Assertions.assertEquals(secondCardBalanceAfter, secondCardBalanceBefore + 1);
+        Assertions.assertEquals(secondCardBalanceAfter, secondCardBalanceBefore);
     }
 
 }
