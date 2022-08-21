@@ -36,12 +36,12 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public TransferPage clickFirstDepositByCardOrder() {
+    public TransferPage clickFirstCardDeposit() {
         depositBtns.first().click();
         return new TransferPage();
     }
 
-    public TransferPage clickSecondDepositByCardOrder() {
+    public TransferPage clickSecondCardDeposit() {
         depositBtns.last().click();
         return new TransferPage();
     }

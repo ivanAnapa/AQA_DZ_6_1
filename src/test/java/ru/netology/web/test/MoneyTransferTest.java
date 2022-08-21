@@ -38,7 +38,7 @@ class MoneyTransferTest {
         int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
         int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
         int transferSum = dashboardPage.calcTransferSum(1234, secondCardBalanceAfter);
-        dashboardPage.clickFirstDepositByCardOrder();
+        dashboardPage.clickFirstCardDeposit();
 
         TransferPage transferPage = new TransferPage();
         transferPage.checkOpenedPage();
@@ -58,7 +58,7 @@ class MoneyTransferTest {
         int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
         int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
         int transferSum = dashboardPage.calcTransferSum(1234, firstCardBalanceAfter);
-        dashboardPage.clickSecondDepositByCardOrder();
+        dashboardPage.clickSecondCardDeposit();
 
         TransferPage transferPage = new TransferPage();
         transferPage.checkOpenedPage();
@@ -78,7 +78,7 @@ class MoneyTransferTest {
         int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
         int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
         int transferSum = dashboardPage.calcTransferSum(1234, firstCardBalanceAfter);
-        dashboardPage.clickFirstDepositByCardOrder();
+        dashboardPage.clickFirstCardDeposit();
 
         TransferPage transferPage = new TransferPage();
         transferPage.checkOpenedPage();
