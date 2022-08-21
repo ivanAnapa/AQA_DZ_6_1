@@ -30,21 +30,15 @@ public class DataHelper {
         return new VerificationCode("12345");
     }
 
-    @Value
-    public static class CardData {
-        private String firstCardNumber;
-        private String secondCardNumber;
+    private static final String firstCardNumber = "5559 0000 0000 0001";
+    private static final String secondCardNumber = "5559 0000 0000 0002";
+
+    public static String getFirstCardNumber() {
+        return firstCardNumber;
     }
 
-    public static CardData getCardNumbers() {
-        return new CardData("5559 0000 0000 0001", "5559 0000 0000 0002");
+    public static String getSecondCardNumber() {
+        return secondCardNumber;
     }
-
-    private static final int transferSum = 1000;
-
-    public static int getTransferSum() {
-        return transferSum;
-    }
-
 
 }

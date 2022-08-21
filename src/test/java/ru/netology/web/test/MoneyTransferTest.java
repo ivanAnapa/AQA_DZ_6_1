@@ -1,8 +1,8 @@
 package ru.netology.web.test;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.DashboardPage;
 import ru.netology.web.page.LoginPage;
@@ -11,6 +11,16 @@ import ru.netology.web.page.TransferPage;
 import static com.codeborne.selenide.Selenide.open;
 
 class MoneyTransferTest {
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
 
     @BeforeEach
     void setup() {
@@ -25,19 +35,19 @@ class MoneyTransferTest {
     @Test
     void shouldTransferMoneyBetweenOwnCardsToFirstCard() {
         DashboardPage dashboardPage = new DashboardPage();
-        int firstCardBalanceAfter = dashboardPage.getCardBalance(1);
-        int secondCardBalanceAfter = dashboardPage.getCardBalance(2);
-        int transferSum = DataHelper.getTransferSum();
-        dashboardPage.clickDepositByCardOrder(1);
+        int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
+        int transferSum = dashboardPage.calcTransferSum(1234, secondCardBalanceAfter);
+        dashboardPage.clickFirstDepositByCardOrder();
 
         TransferPage transferPage = new TransferPage();
         transferPage.checkOpenedPage();
         transferPage.setTransferSum(transferSum);
-        transferPage.setCardFrom(DataHelper.getCardNumbers().getSecondCardNumber());
+        transferPage.setCardFrom(DataHelper.getSecondCardNumber());
         transferPage.clickTransferBtn();
 
-        int firstCardBalanceBefore = dashboardPage.getCardBalance(1);
-        int secondCardBalanceBefore = dashboardPage.getCardBalance(2);
+        int firstCardBalanceBefore = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceBefore = dashboardPage.getSecondCardBalance();
         Assertions.assertEquals(firstCardBalanceAfter + transferSum, firstCardBalanceBefore);
         Assertions.assertEquals(secondCardBalanceAfter - transferSum, secondCardBalanceBefore);
     }
@@ -45,19 +55,19 @@ class MoneyTransferTest {
     @Test
     void shouldTransferMoneyBetweenOwnCardsToSecondCard() {
         DashboardPage dashboardPage = new DashboardPage();
-        int firstCardBalanceAfter = dashboardPage.getCardBalance(1);
-        int secondCardBalanceAfter = dashboardPage.getCardBalance(2);
-        int transferSum = DataHelper.getTransferSum();
-        dashboardPage.clickDepositByCardOrder(2);
+        int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
+        int transferSum = dashboardPage.calcTransferSum(1234, firstCardBalanceAfter);
+        dashboardPage.clickSecondDepositByCardOrder();
 
         TransferPage transferPage = new TransferPage();
         transferPage.checkOpenedPage();
         transferPage.setTransferSum(transferSum);
-        transferPage.setCardFrom(DataHelper.getCardNumbers().getFirstCardNumber());
+        transferPage.setCardFrom(DataHelper.getFirstCardNumber());
         transferPage.clickTransferBtn();
 
-        int firstCardBalanceBefore = dashboardPage.getCardBalance(1);
-        int secondCardBalanceBefore = dashboardPage.getCardBalance(2);
+        int firstCardBalanceBefore = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceBefore = dashboardPage.getSecondCardBalance();
         Assertions.assertEquals(firstCardBalanceAfter - transferSum, firstCardBalanceBefore);
         Assertions.assertEquals(secondCardBalanceAfter + transferSum, secondCardBalanceBefore);
     }
@@ -65,19 +75,19 @@ class MoneyTransferTest {
     @Test
     void cancelMoneyTransfer() {
         DashboardPage dashboardPage = new DashboardPage();
-        int firstCardBalanceAfter = dashboardPage.getCardBalance(1);
-        int secondCardBalanceAfter = dashboardPage.getCardBalance(2);
-        int transferSum = DataHelper.getTransferSum();
-        dashboardPage.clickDepositByCardOrder(1);
+        int firstCardBalanceAfter = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceAfter = dashboardPage.getSecondCardBalance();
+        int transferSum = dashboardPage.calcTransferSum(1234, firstCardBalanceAfter);
+        dashboardPage.clickFirstDepositByCardOrder();
 
         TransferPage transferPage = new TransferPage();
         transferPage.checkOpenedPage();
         transferPage.setTransferSum(transferSum);
-        transferPage.setCardFrom(DataHelper.getCardNumbers().getSecondCardNumber());
+        transferPage.setCardFrom(DataHelper.getSecondCardNumber());
         transferPage.clickCancelBtn();
 
-        int firstCardBalanceBefore = dashboardPage.getCardBalance(1);
-        int secondCardBalanceBefore = dashboardPage.getCardBalance(2);
+        int firstCardBalanceBefore = dashboardPage.getFirstCardBalance();
+        int secondCardBalanceBefore = dashboardPage.getSecondCardBalance();
         Assertions.assertEquals(firstCardBalanceAfter, firstCardBalanceBefore);
         Assertions.assertEquals(secondCardBalanceAfter, secondCardBalanceBefore);
     }
