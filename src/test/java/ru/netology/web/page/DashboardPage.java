@@ -46,16 +46,4 @@ public class DashboardPage {
         return new TransferPage();
     }
 
-    public int calcTransferSum(int initTransSum, int cardBalance) {
-        int transferSum = 0;
-        if (cardBalance == 0) {
-            throw new RuntimeException("Баланс карты = 0 и не возволяет провести тест");
-        } else if (initTransSum > cardBalance || initTransSum == cardBalance) {
-            transferSum = cardBalance - 1;
-        } else {
-            transferSum = initTransSum;
-        }
-        return transferSum;
-    }
-
 }
